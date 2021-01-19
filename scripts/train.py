@@ -224,7 +224,7 @@ def train_one_epoch(sess, ops, train_writer):
     is_training=True
     
     loss_sum = 0
-    
+    log_string(str(datetime.now()))
     for TRAIN_FILE in TRAIN_FILES:
         current_data_pl, current_label = provider.load_lund(os.path.join(DATA_DIR,TRAIN_FILE))    
         current_data_pl, current_label, _ = provider.shuffle_data(current_data_pl, np.squeeze(current_label))
@@ -233,7 +233,6 @@ def train_one_epoch(sess, ops, train_writer):
         file_size = current_data_pl.shape[0]
         num_batches = file_size // BATCH_SIZE
         #num_batches = 2
-        log_string(str(datetime.now()))
         for batch_idx in range(num_batches):
             
             start_idx = batch_idx * (BATCH_SIZE)
@@ -268,7 +267,8 @@ def eval_one_epoch(sess, ops, test_writer):
     loss_sum = 0
     y_source=[]
 
-
+    log_string(str(datetime.now()))
+    log_string('---- EPOCH %03d EVALUATION ----'%(EPOCH_CNT))
     for file_idx, TEST_FILE in enumerate(TEST_FILES):
         current_data_pl, current_label = provider.load_lund(os.path.join(DATA_DIR,TEST_FILE))
         current_data_pl, current_label, _ = provider.shuffle_data(current_data_pl, np.squeeze(current_label))
@@ -277,8 +277,7 @@ def eval_one_epoch(sess, ops, test_writer):
         num_batches = file_size // (BATCH_SIZE)
         #num_batches = 2
         
-        log_string(str(datetime.now()))
-        log_string('---- EPOCH %03d EVALUATION ----'%(EPOCH_CNT))
+        
         for batch_idx in range(num_batches):
             
             start_idx = batch_idx * (BATCH_SIZE)
@@ -293,7 +292,7 @@ def eval_one_epoch(sess, ops, test_writer):
                 ops['adj_matrix']: batch_adj,
             }
             
-            if file_idx ==0:
+            if file_idx ==0 and batch_idx ==0:
                 start_time = time.time()
             
             summary, step, loss,pred,lr = sess.run([ops['merged'], ops['step'],
@@ -303,7 +302,7 @@ def eval_one_epoch(sess, ops, test_writer):
                                                    feed_dict=feed_dict)
         
 
-            if file_idx ==0:
+            if file_idx ==0 and batch_idx ==0:
                 duration = time.time() - start_time
                 log_string("Eval time: "+str(duration)) 
                 log_string("Learning rate: "+str(lr)) 
