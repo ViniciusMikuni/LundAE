@@ -2,4 +2,3 @@ Lund_LHCOlympics_RDdata_11.h5
 Lund_LHCOlympics_RDdata_12.h5
 Lund_LHCOlympics_RDdata_13.h5
 Lund_LHCOlympics_RDdata_14.h5
-Lund_LHCOlympics_RDdata_15.h5

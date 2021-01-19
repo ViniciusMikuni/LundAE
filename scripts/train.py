@@ -269,7 +269,7 @@ def eval_one_epoch(sess, ops, test_writer):
     y_source=[]
 
 
-    for TEST_FILE in TEST_FILES:
+    for file_idx, TEST_FILE in enumerate(TEST_FILES):
         current_data_pl, current_label = provider.load_lund(os.path.join(DATA_DIR,TEST_FILE))
         current_data_pl, current_label, _ = provider.shuffle_data(current_data_pl, np.squeeze(current_label))
         current_data_pl,adj_matrix,zero_mask = Preprocessing(current_data_pl)
@@ -293,7 +293,7 @@ def eval_one_epoch(sess, ops, test_writer):
                 ops['adj_matrix']: batch_adj,
             }
             
-            if batch_idx ==0:
+            if file_idx ==0:
                 start_time = time.time()
             
             summary, step, loss,pred,lr = sess.run([ops['merged'], ops['step'],
@@ -303,7 +303,7 @@ def eval_one_epoch(sess, ops, test_writer):
                                                    feed_dict=feed_dict)
         
 
-            if batch_idx ==0:
+            if file_idx ==0:
                 duration = time.time() - start_time
                 log_string("Eval time: "+str(duration)) 
                 log_string("Learning rate: "+str(lr)) 
