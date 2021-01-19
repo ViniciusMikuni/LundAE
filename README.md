@@ -17,6 +17,7 @@ git clone https://github.com/ViniciusMikuni/LundAE.git
 The training files are by default assumed to be stored in the folder ```h5```. If a different folder is used, change the ```--data_dir``` flag location of ```train.py```.
 To run the training use:
 ```bash
+cd scripts
 python train.py [--adj] --log_dir lund_classification
 ```
 
