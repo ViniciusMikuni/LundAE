@@ -232,7 +232,7 @@ def train_one_epoch(sess, ops, train_writer):
 
         file_size = current_data_pl.shape[0]
         num_batches = file_size // BATCH_SIZE
-        num_batches = 2
+        #num_batches = 2
         log_string(str(datetime.now()))
         for batch_idx in range(num_batches):
             
@@ -275,7 +275,7 @@ def eval_one_epoch(sess, ops, test_writer):
         current_data_pl,adj_matrix,zero_mask = Preprocessing(current_data_pl)
         file_size = current_data_pl.shape[0]
         num_batches = file_size // (BATCH_SIZE)
-        num_batches = 2
+        #num_batches = 2
         
         log_string(str(datetime.now()))
         log_string('---- EPOCH %03d EVALUATION ----'%(EPOCH_CNT))
